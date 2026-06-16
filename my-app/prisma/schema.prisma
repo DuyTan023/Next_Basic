@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model post {
+  id        Int      @id @default(autoincrement())
+  user_id   Int
+  title     String
+  body      String
+  slug      String   @unique
+  create_at DateTime @db.Date
+  user      user     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model user {
+  id      Int     @id @default(autoincrement())
+  name    String  @db.VarChar
+  age     Int?    @db.SmallInt
+  address String?
+  post    post[]
+}

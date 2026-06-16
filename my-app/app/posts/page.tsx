@@ -59,29 +59,28 @@ function buildPageNumbers(current: number, total: number): (number | "...")[] {
 
 function PostCard({ post }: { post: post }) {
   const date = new Date(post.create_at).toLocaleDateString("vi-VN", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
+    day: "2-digit", month: "2-digit", year: "numeric",
   });
 
   return (
     <Link
       href={`/posts/${post.slug}`}
-      className="group block border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 bg-white dark:bg-zinc-900 hover:border-indigo-400 dark:hover:border-indigo-500 hover:shadow-md transition-all duration-200"
+      className="group flex items-start gap-5 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 bg-white dark:bg-zinc-900 hover:border-indigo-400 dark:hover:border-indigo-500 hover:shadow-md transition-all duration-200"
     >
-      {/* title */}
-      <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 line-clamp-2 leading-snug mb-3 transition-colors">
-        {post.title}
-      </h2>
+      {/* icon */}
+      <div className="shrink-0 w-10 h-10 rounded-lg bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center mt-0.5">
+        <FileText className="w-5 h-5 text-indigo-500" />
+      </div>
 
-      {/* excerpt */}
-      <p className="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 leading-relaxed mb-5">
-        {post.body}
-      </p>
-
-      {/* meta */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4 text-xs text-zinc-400 dark:text-zinc-500">
+      {/* content */}
+      <div className="flex-1 min-w-0">
+        <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 line-clamp-1 transition-colors mb-1">
+          {post.title}
+        </h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+          {post.body}
+        </p>
+        <div className="flex items-center gap-4 mt-2 text-xs text-zinc-400 dark:text-zinc-500">
           <span className="flex items-center gap-1.5">
             <User className="w-3.5 h-3.5" />
             {post.slug}
@@ -91,15 +90,17 @@ function PostCard({ post }: { post: post }) {
             {date}
           </span>
         </div>
-        <ArrowRight className="w-4 h-4 text-zinc-300 group-hover:text-indigo-500 group-hover:translate-x-0.5 transition-all duration-200" />
       </div>
+
+      {/* arrow */}
+      <ArrowRight className="shrink-0 w-4 h-4 text-zinc-300 group-hover:text-indigo-500 group-hover:translate-x-0.5 transition-all duration-200 mt-1" />
     </Link>
   );
 }
 
 function PostListSkeleton() {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="flex flex-col gap-4">
       {Array.from({ length: 6 }).map((_, i) => (
         <div className="flex w-full max-w-xs flex-col gap-7" key={i}>
           <div className="flex flex-col gap-3">
